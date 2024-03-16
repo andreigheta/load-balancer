@@ -1,0 +1,30 @@
+Copyright 2023 Gheta Andrei-Cristian 312CA
+
+Descriere:
+
+Pentru inceput, adaugarea unui server presupune adaugarea a 3 servere. Adica
+adaugam si clonele server-ului tot ca servere pe hashring, fiecare cu
+hash-ul si elementele proprii, dar cu acelasi server_id. Dupa ce serverele
+sunt adaugate, acestea sunt sortate pe hashring in functie de hash-ul lor.
+Cand incepem sa adaugam de la al doilea server incolo, de fiecare data
+redistribuim elementele la locul unde ar trebui sa fie si realocam hashring-ul.
+
+Stergerea unui server presupune, evident, stergerea sa si a clonelor sale de pe
+hashring (adica stergerea a 3 servere in aceasta implementare), dar si mutarea
+tuturor elementelor continute de acestea pe serverele din imediata apropiere
+(spre ex: stergem server-ul de pe indicele i, elementele acestuia vor fi mutate
+la server-ul de pe indicele i + 1). In mare, tot ce facem este sa luam toate
+informatiile de pe cel care trebuie sa fie sters, il stergem si le mutam pe cel
+corect. Realizam acest lucru de 3 ori pentru fiecare server sters. La final
+realocam hashring-ul.
+
+Adaugarea unui element pe un server implica parcurgerea intregului hashring
+pana cand gasim un element ce are un hash mai mare decat key-ul dat. Odata
+gasit acest element, adaugam elementul si oprim iterarea. In cazul in care
+hash-ul key-ului este mai mare decat toate hash-urile serverelor, elementul
+se va adauga pe primul server.
+
+Similar cu adaugarea, intoarcerea unui element se realizeaza fix in acelasi
+mod, singura chestie care le diferentiaza este ca trebuie sa verificam ca
+primul server sa existe pe hashring.
+
